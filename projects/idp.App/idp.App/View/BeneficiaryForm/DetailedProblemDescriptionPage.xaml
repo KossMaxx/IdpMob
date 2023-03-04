@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<extensions:CustomBackButtonEventHandlerContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:extensions="clr-namespace:idp.App.View.Extensions;assembly=idp.App"
+             xmlns:controls="clr-namespace:idp.App.View.Controls;assembly=idp.App"
+             mc:Ignorable="d"
+             x:Class="idp.App.View.BeneficiaryForm.DetailedProblemDescriptionPage"
+             Title="Детальний опис проблеми">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Зберегти" Order="Secondary" Priority="0" Command="{Binding SaveBeneficiaryCommand}"/>
+        <ToolbarItem Text="Зберегти та створити нового" Order="Primary" Priority="0" Command="{Binding SaveBeneficiaryAndNewCommand}"/>
+        <ToolbarItem Text="Видалити" Order="Secondary" Priority="0" Command="{Binding DeleteBeneficiaryCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="   Детальний опис проблеми" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}"/>
+                <controls:RequireLabel Grid.Row="1" Grid.Column="0" Text="   Детальний опис проблеми" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand"/>
+                <Editor Grid.Row="1" Grid.Column="1" BackgroundColor="#eeeeee" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.ProblemDescription}" AutoSize="TextChanges">
+                    <Editor.Triggers>
+                        <MultiTrigger TargetType="Editor">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{Binding NewBeneficiary.ProblemDescription, Converter={StaticResource IsObjectFilled}}" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                        </MultiTrigger>
+                    </Editor.Triggers>
+                </Editor>
+            </Grid>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</extensions:CustomBackButtonEventHandlerContentPage>

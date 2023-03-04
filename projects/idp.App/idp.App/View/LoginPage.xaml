@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:idp.App.View;assembly=idp.App"
+             x:Class="idp.App.View.LoginPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="logo.png" />
+            </StackLayout>
+
+            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Entry x:Name="Entry_Username" Placeholder="Логін" Text="{Binding Path=Username}" Margin="0,0,0,15"></Entry>
+                    <Entry x:Name="Entry_Password" Placeholder="Пароль" Text="{Binding Path=Password}" IsPassword="True" Margin="0,0,0,15"></Entry>
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0, 20">
+                        <view:ButtonWithSpinner x:Name="ButtonWithSpinner" Text="{Binding Path=SingInBtnText}" Command="{Binding SingIn}" IsBusy="{Binding Path=Loading}" IsEnabled="{Binding Path=Loading, Converter={StaticResource Inverter}}"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

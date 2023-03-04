@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">212.90.184.126</domain>
+    <domain includeSubdomains="true">192.168.1.2</domain>
+    <domain includeSubdomains="true">idp.tqm.com.ua</domain>
+    <domain includeSubdomen="true">idp.r2p.org.ua</domain>
+  </domain-config>
+</network-security-config>

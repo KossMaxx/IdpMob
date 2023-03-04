@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<extensions:CustomBackButtonEventHandlerContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:idp.App.View.Controls;assembly=idp.App"
+             xmlns:extensions="clr-namespace:idp.App.View.Extensions;assembly=idp.App"
+             mc:Ignorable="d"
+             x:Class="idp.App.View.BeneficiaryForm.AddHelpPage"
+             Title="Допомога">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Зберегти" Order="Secondary" Priority="0" Command="{Binding SaveBeneficiaryCommand}"/>
+        <ToolbarItem Text="Зберегти та створити нового" Order="Primary" Priority="0" Command="{Binding SaveBeneficiaryAndNewCommand}"/>
+        <ToolbarItem Text="Видалити" Order="Secondary" Priority="0" Command="{Binding DeleteBeneficiaryCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ScrollView x:Name="MainScrollView" Grid.Row="0" >
+                    <Grid x:Name="MainGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="300"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Text="   Під час 'першого контакту' надана допомога" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}"/>
+
+                        <Grid Grid.Row="1" Style="{StaticResource formGrid}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <controls:RequireLabel  Text="Під час 'першого контакту' допомога надавалась?" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+
+                                <StackLayout Grid.Column="1" Orientation="Horizontal" CompressedLayout.IsHeadless="true">
+                                    <Label  Text="Так" IsVisible="{Binding Source={x:Reference IsAnyHelpOnFirstContactSwitch}, Path=IsToggled}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                    <Label  Text="Ні" IsVisible="{Binding Source={x:Reference IsAnyHelpOnFirstContactSwitch}, Path=IsToggled, Converter={StaticResource Inverter}}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                    <Switch x:Name="IsAnyHelpOnFirstContactSwitch" IsToggled="{Binding NewBeneficiary.IsAnyHelpOnFirstContact}"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Style="{StaticResource appSwitch}"/>
+                                </StackLayout>
+                            </Grid>
+                            <Grid Grid.Row="1" IsVisible="{Binding Source={x:Reference IsAnyHelpOnFirstContactSwitch}, Path=IsToggled}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label  Text="Надання інформації НЕюридичного характеру" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Button Grid.Column="1" Command="{Binding MultipleBtnCommand}" CommandParameter="NotLawHelps" Text="{Binding NotLawHelpsBtn}"/>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label  Text="Юр. конс./роз'яснення з питань" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Button Grid.Column="1" Command="{Binding MultipleBtnCommand}" CommandParameter="LawConsultancyProblems" Text="{Binding LawConsultancyProblemBtn}"/>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="Подробиці юр. конс./роз'яснення" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Editor Grid.Column="1" BackgroundColor="#eeeeee" HeightRequest="70" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.LawConsultancyDescription}" AutoSize="TextChanges"/>
+                                </Grid>
+                                <Grid Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label  Text="Допомога в скл./оформленні док. з питань" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Button Grid.Column="1" Command="{Binding MultipleBtnCommand}" CommandParameter="DocumentConsultancyProblems" Text="{Binding DocumentConsultancyProblemsBtn}"/>
+                                </Grid>
+                                <Grid Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="Подробиці скл./оформлення док." VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Editor Grid.Column="1" BackgroundColor="#eeeeee" HeightRequest="70" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.DocumentCreationDescription}" AutoSize="TextChanges"/>
+                                </Grid>
+                                <Grid Grid.Row="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label  Text="Супровід особи/візит в інтересах особи з питань" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Button Grid.Column="1" Command="{Binding MultipleBtnCommand}" CommandParameter="ConvoyProblems" Text="{Binding ConvoyProblemsBtn}"/>
+                                </Grid>
+                                <Grid Grid.Row="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="Подробиці супроводу/ візиту в інтересах особи" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                    <Editor Grid.Column="1" BackgroundColor="#eeeeee" HeightRequest="70" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.ConvoyDescription}" AutoSize="TextChanges"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Label Grid.Row="2" Text="   Подальша допомога та додаткові дані" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}"/>
+                        <Grid Grid.Row="3" Style="{StaticResource formGrid}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <controls:RequireLabel  Text="Реком. форми подальшої допомоги" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Button Grid.Column="1" Command="{Binding MultipleBtnCommand}" CommandParameter="HelpForms" Text="{Binding HelpFormsBtn}"/>
+                            </Grid>
+                        </Grid>
+                        <Label Grid.Row="4" Text="   Додаткові дані для IPA (склад сім'ї)" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}"/>
+                        <Grid Grid.Row="5" Style="{StaticResource formGrid}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Всього членів сім'ї" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" IsEnabled="False" Text="{Binding NewBeneficiary.FamilyMembers}"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Чоловічої статі" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" Text="{Binding NewBeneficiary.FamilyMales}"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Жіночої статі" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" Text="{Binding NewBeneficiary.FamilyFemales}"/>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Дітей (0 - 17)" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" Text="{Binding NewBeneficiary.FamilyChildren}"/>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label  Text="Дорослих (18 - 59)" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" Text="{Binding NewBeneficiary.FamilyAdults}"/>
+                            </Grid>
+                            <Grid Grid.Row="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Людей похилого віку (60+)" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" Text="{Binding NewBeneficiary.FamilyOld}"/>
+                            </Grid>
+                        </Grid>
+                        <Label Grid.Row="6" Text="   Помилка при синхронізації" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}" Margin="0,15,0,0"/>
+                        <Grid Grid.Row="7" Style="{StaticResource formGrid}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label  Text="Помилка" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand"/>
+                            <Label Grid.Column="1" VerticalOptions="StartAndExpand" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.SyncError,Mode=TwoWay}"/>
+                        </Grid>
+                        <Grid Grid.Row="8" Style="{StaticResource formGrid}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<Label  Text="Створити контакт" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <StackLayout Grid.Column="1" Orientation="Horizontal" CompressedLayout.IsHeadless="true">
+                                <Label  Text="Так" IsVisible="{Binding Source={x:Reference CreateContactSwitch}, Path=IsToggled}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <Label  Text="Ні" IsVisible="{Binding Source={x:Reference CreateContactSwitch}, Path=IsToggled, Converter={StaticResource Inverter}}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <Switch x:Name="CreateContactSwitch" IsToggled="{Binding NewBeneficiary.CreateContact}"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Style="{StaticResource appSwitch}"/>
+                            </StackLayout>-->
+                            <Label Text="Дії в разі непроходження синхронізації" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть дію" ItemsSource="{Binding Path=FailActionList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.FailAction,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                        </Grid>
+                    </Grid>
+                </ScrollView>
+            </Grid>
+            <ContentView x:Name="DownArrowContentView" IsVisible="false" AbsoluteLayout.LayoutBounds=".5, 1, 40, 90" AbsoluteLayout.LayoutFlags="PositionProportional">
+                <Image Source="down.png" Aspect="AspectFill" VerticalOptions="End"/>
+            </ContentView>
+            <!--Modal contents-->
+            <controls:LoadingControl IsBusy="{Binding IsBusy}"/>
+            <ContentView x:Name="MultipleListModalView" BackgroundColor="#C0808080" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout x:Name="MultipleListModalViewLayout" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
+                    <StackLayout.Margin>
+                        <OnIdiom x:TypeArguments="Thickness" Phone="20,0" Tablet="100,0"/>
+                    </StackLayout.Margin>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding MultipleSelectedListTitle}" TextColor="Black" FontSize="19" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                        <ListView Grid.Row="1" ItemsSource="{Binding MultipleItems, Mode=TwoWay}" Margin="20" SeparatorVisibility="None" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Margin="0, 0, 0, 10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" TextColor="Black" />
+                                            <Switch Grid.Column="1" IsToggled="{Binding IsSelected, Mode=TwoWay}" Style="{StaticResource appSwitch}"/>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Grid.Row="2" Text="Оk" Command="{Binding CloseMultipleListCommand}" VerticalOptions="End"></Button>
+                    </Grid>
+                </StackLayout>
+            </ContentView>
+            <ContentView x:Name="MultipleGroupedListModalView" BackgroundColor="#C0808080" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout x:Name="MultipleGroupedListModalViewLayout" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
+                    <StackLayout.Margin>
+                        <OnIdiom x:TypeArguments="Thickness" Phone="20,20" Tablet="100,40"/>
+                    </StackLayout.Margin>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding MultipleSelectedListTitle}" TextColor="Black" FontSize="19" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                        <ListView Grid.Row="1"  x:Name="MultipleGroupedList"
+                               ItemsSource="{Binding Path=MultipleGroupedItems}"
+                               IsGroupingEnabled="true"
+                               GroupDisplayBinding="{Binding GroupName}"
+                               SelectionMode="None">
+                            <ListView.GroupHeaderTemplate>
+                                <DataTemplate>
+                                    <ViewCell Height="25">
+                                        <StackLayout VerticalOptions="FillAndExpand"
+                                                 Padding="5">
+                                            <Label Text="{Binding GroupName}" Style="{StaticResource blueLabel}" FontSize="16" HeightRequest="30" VerticalOptions="Center"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.GroupHeaderTemplate>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Margin="20, 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" TextColor="Black" />
+                                            <Switch Grid.Column="1" IsToggled="{Binding IsSelected, Mode=TwoWay}" Style="{StaticResource appSwitch}"/>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Grid.Row="2" Text="Ок" Command="{Binding CloseMultipleListCommand}" VerticalOptions="End"></Button>
+                    </Grid>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</extensions:CustomBackButtonEventHandlerContentPage>

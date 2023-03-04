@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<extensions:CustomBackButtonEventHandlerContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:extensions="clr-namespace:idp.App.View.Extensions;assembly=idp.App"
+             xmlns:controls="clr-namespace:idp.App.View.Controls;assembly=idp.App"
+             mc:Ignorable="d"
+             x:Class="idp.App.View.BeneficiaryForm.ProfileDataPage"
+             Title="Дані анкети">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Зберегти" Order="Secondary" Priority="0" Command="{Binding SaveBeneficiaryCommand}"/>
+        <ToolbarItem Text="Зберегти та створити нового" Order="Primary" Priority="0" Command="{Binding SaveBeneficiaryAndNewCommand}"/>
+        <ToolbarItem Text="Видалити" Order="Secondary" Priority="0" Command="{Binding DeleteBeneficiaryCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="   Дані анкети" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}"/>
+                <ScrollView x:Name="MainScrollView" Grid.Row="1">
+                    <Grid x:Name="MainGrid"  Style="{StaticResource formGrid}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel Text="Дата опитування" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <DatePicker Grid.Column="1" Date="{Binding NewBeneficiary.PollDate}" Format="dd.MM.yyyy" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                        </Grid>
+                        <Label Grid.Row="1" Text="{Binding NewBeneficiary.UserFio}" VerticalOptions="Center"/>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel Text="Офіс реєстрації" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть офіс реєстрації" ItemsSource="{Binding Path=Offices}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.Office, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker" Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel  Text="Область, в якій здійснювалось опитування" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть область" ItemsSource="{Binding Path=Areas}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.PollArea, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel  Text="Район, де здійснювалось опитування" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть район" ItemsSource="{Binding Path=PollRegions}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.PollRegion, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel  Text="Населений пункт" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" WidthRequest="160" Placeholder="Оберіть населений пункт" Focused="LocalityEntryFocused" Text="{Binding NewBeneficiary.PollLocality.Name}">
+                                <Entry.Triggers>
+                                    <MultiTrigger TargetType="Entry">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition Binding="{Binding NewBeneficiary.PollLocality, Converter={StaticResource IsObjectFilled}}" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </MultiTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                        </Grid>
+                        <Grid Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label  Text="Назва установи" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.PollInstitution}"/>
+                        </Grid>
+                        <Grid Grid.Row="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:RequireLabel  Grid.Column="0" Grid.Row="0" Text="Опитування проводилось поблизу лінії розмежування" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+
+                            <StackLayout Grid.Column="1" Grid.Row="0" Orientation="Horizontal" CompressedLayout.IsHeadless="true">
+                                <Label  Text="Так" IsVisible="{Binding Source={x:Reference IsCloseToBorderSwitch}, Path=IsToggled}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <Label  Text="Ні" IsVisible="{Binding Source={x:Reference IsCloseToBorderSwitch}, Path=IsToggled, Converter={StaticResource Inverter}}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <Switch x:Name="IsCloseToBorderSwitch" IsToggled="{Binding NewBeneficiary.IsCloseToBorder}"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Style="{StaticResource appSwitch}" />
+                            </StackLayout>
+                        </Grid>
+                        <Grid Grid.Row="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel  Text="Форма діяльності ПнЗ" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть форму діяльності Пнз" ItemsSource="{Binding Path=ActivityForms}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.ActivityForm, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label  Text="Тип виїзної зустрічі" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть тип зустрічі" ItemsSource="{Binding Path=MeetingTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.MeetingType, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+                        </Grid>
+                        <Grid Grid.Row="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label  Text="Інші" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry  Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.MeetingType_Other}"/>
+                        </Grid>
+                    </Grid>
+                </ScrollView>
+            </Grid>
+            <ContentView x:Name="DownArrowContentView" IsVisible="false" AbsoluteLayout.LayoutBounds=".5, 1, 40, 90" AbsoluteLayout.LayoutFlags="PositionProportional">
+                    <Image Source="down.png" Aspect="AspectFill" VerticalOptions="End"/>
+            </ContentView>
+            <!--Modal contents-->
+            <controls:LoadingControl IsBusy="{Binding IsBusy}"/>
+            <ContentView x:Name="localityView" BackgroundColor="#C0808080" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
+                    <StackLayout.Margin>
+                        <OnIdiom x:TypeArguments="Thickness" Phone="20,40" Tablet="100,150"/>
+                    </StackLayout.Margin>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Text="X" Clicked="CancelLocalityModal" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="40" HeightRequest="40" ></Button>
+                        <Label Grid.Row="0" Text="Оберіть населений пункт" TextColor="Black" FontSize="19" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                        <StackLayout Grid.Row="1" CompressedLayout.IsHeadless="true">
+                            <SearchBar x:Name="LocalitySearch" Text="{Binding LocalitySearchQuery}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Пошук">
+                                <SearchBar.Behaviors>
+                                    <behaviors:EventHandlerBehavior EventName="TextChanged">
+                                        <behaviors:InvokeCommandAction Command="{Binding RefreshLocalityList}" CommandParameter="poll" />
+                                    </behaviors:EventHandlerBehavior>
+                                </SearchBar.Behaviors>
+                            </SearchBar>
+                            <Label x:Name="LocalityLoadIndicator" IsVisible="{Binding Path=LocalityLoadIndicator}" Text="Загрузка..." TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </StackLayout>
+                        <CollectionView Grid.Row="2" x:Name="LocalityList" ItemsSource="{Binding Path=Localities}" SelectionMode="Single" SelectionChanged="LocalitySelected">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout HorizontalOptions="FillAndExpand"
+                                                         Orientation="Horizontal" Padding="10" CompressedLayout.IsHeadless="true">
+                                        <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</extensions:CustomBackButtonEventHandlerContentPage>

@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<extensions:CustomBackButtonEventHandlerContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:extensions="clr-namespace:idp.App.View.Extensions;assembly=idp.App"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:controls="clr-namespace:idp.App.View.Controls;assembly=idp.App"
+             xmlns:myBehaviors="clr-namespace:idp.App.Behaviors;assembly=idp.App"
+             mc:Ignorable="d"
+             x:Class="idp.App.View.BeneficiaryForm.PersonalDataPage"
+             Title="Персональні дані особи">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Зберегти" Order="Secondary" Priority="0" Command="{Binding SaveBeneficiaryCommand}"/>
+        <ToolbarItem Text="Зберегти та створити нового" Order="Primary" Priority="0" Command="{Binding SaveBeneficiaryAndNewCommand}"/>
+        <ToolbarItem Text="Видалити" Order="Secondary" Priority="0" Command="{Binding DeleteBeneficiaryCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="   Персональні дані особи" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource blueLabel}"/>
+                <ScrollView x:Name="MainScrollView" Grid.Row="1" >
+                    <Grid x:Name="MainGrid"  Style="{StaticResource formGrid}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                            <!--16-->
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="П.І.П" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.Fio}"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel  Text="Стать" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть стать" ItemsSource="{Binding Path=SexList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.Sex,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:RequireLabel  Text="Громадянство" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть громадянство" ItemsSource="{Binding Path=Nationalities}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.DNationality,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Вкажіть інше/множинне громадянство" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.MultipleNationality}"/>
+                        </Grid>
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:RequireLabel  Text="Вікова категорія" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть вікову категорію" ItemsSource="{Binding Path=AgeCategories}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.DAgeCategory,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:RequireLabel  Text="Фактичне місце проживання" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть фактичне місце проживання" ItemsSource="{Binding Path=LivingPlaces}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.DLivingPlace,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:RequireLabel  Text="Область фактичного місця проживання" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть область" ItemsSource="{Binding Path=Areas}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.PIArea,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:RequireLabel  Text="Район фактичного місця проживання" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть район" ItemsSource="{Binding Path=PIRegions}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.PIRegion,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Населений пункт фактичного місця проживання" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" WidthRequest="160" Placeholder="Оберіть населений пункт" Focused="LocalityEntryFocused" Text="{Binding NewBeneficiary.PILocality.Name}"/>
+                        </Grid>
+                        <Grid Grid.Row="9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Цей населений пункт в 15км від лінії розмежування?" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+
+                            <StackLayout Grid.Column="1" Orientation="Horizontal" CompressedLayout.IsHeadless="true">
+                                <CheckBox IsChecked="{Binding NewBeneficiary.IsIn15KmFromBorder}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                <Label  Text="Так" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </Grid>
+                        <Grid Grid.Row="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Контактна адреса" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Editor Grid.Column="1" BackgroundColor="#eeeeee" HeightRequest="70" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.ContactAddress}" AutoSize="TextChanges"/>
+                        </Grid>
+                        <Grid Grid.Row="11">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Контактний номер телефону" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Telephone" Text="{Binding NewBeneficiary.ContactPhoneMain}">
+                                <Entry.Behaviors>
+                                    <myBehaviors:PhoneMask Mask="+380 XX XXX XX XX"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </Grid>
+                        <Grid Grid.Row="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Додаткові номери телефону" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.ContactPhone}"/>
+                        </Grid>
+                        <Grid Grid.Row="13">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Email" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Email" Text="{Binding NewBeneficiary.Email}"/>
+                        </Grid>
+                        <Grid Grid.Row="14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Соц. мережі" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.SocialNetworks}"/>
+                        </Grid>
+                        <Grid Grid.Row="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Довідка про взяття на облік ВПО" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+
+                            <StackLayout Grid.Column="1" Orientation="Horizontal" CompressedLayout.IsHeadless="true">
+                                <Label  Text="Так" IsVisible="{Binding Source={x:Reference IsOnVpoSwitch}, Path=IsToggled}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <Label  Text="Ні" IsVisible="{Binding Source={x:Reference IsOnVpoSwitch}, Path=IsToggled, Converter={StaticResource Inverter}}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                <Switch x:Name="IsOnVpoSwitch" IsToggled="{Binding NewBeneficiary.IsOnVpo}"  VerticalOptions="Center" HorizontalOptions="EndAndExpand" Style="{StaticResource appSwitch}" />
+                            </StackLayout>
+                        </Grid>
+                        <Grid Grid.Row="16" IsVisible="{Binding Source={x:Reference IsOnVpoSwitch}, Path=IsToggled}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="№ довідки ВПО" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.VpoNumber}"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="Дата видачі" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <extensions:NullableDatePicker Grid.Column="1" NullableDate="{Binding NewBeneficiary.VpoIssuedDate}" Format="dd.MM.yyyy" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Орган, що видав" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.VpoIssuedInstitute}" />
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="17">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Представник ВПО" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть представника ВПО" ItemsSource="{Binding Path=VpoAgents}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.DVpoAgent,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                        </Grid>
+                        <Grid Grid.Row="18">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Інші" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.VpoAgent_Other}"/>
+                        </Grid>
+                        <Grid Grid.Row="19">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="П.І.П представника" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.VpoAgentFio}"/>
+                        </Grid>
+                        <Grid Grid.Row="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Тел. представника" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Keyboard="Numeric" Text="{Binding NewBeneficiary.VpoAgentPhone}"/>
+
+                        </Grid>
+                        <Grid Grid.Row="21">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Назва організації" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.OrganizationName}"/>
+                        </Grid>
+                        <Grid Grid.Row="22">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <controls:RequireLabel  Text="Соціальний статус" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <extensions:BindablePicker Grid.Column="1" Title="Оберіть соціальний статус" ItemsSource="{Binding Path=SocialStatuses}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding NewBeneficiary.SocialStatus,Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Fill">
+                                <extensions:BindablePicker.Triggers>
+                                    <Trigger TargetType="extensions:BindablePicker"  Property="SelectedIndex" Value="-1">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource UnfilledRequireFieldsColor}"/>
+                                    </Trigger>
+                                </extensions:BindablePicker.Triggers>
+                            </extensions:BindablePicker>
+                        </Grid>
+                        <Grid Grid.Row="23">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="Інші" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                            <Entry Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Text="{Binding NewBeneficiary.SocialStatus_Other}"/>
+                        </Grid>
+                    </Grid>
+                </ScrollView>
+            </Grid>
+            <ContentView x:Name="DownArrowContentView" IsVisible="false" AbsoluteLayout.LayoutBounds=".5, 1, 40, 90" AbsoluteLayout.LayoutFlags="PositionProportional">
+                    <Image Source="down.png" Aspect="AspectFill" VerticalOptions="End"/>
+            </ContentView>
+            <!--Modal contents-->
+            <controls:LoadingControl IsBusy="{Binding IsBusy}"/>
+            <ContentView x:Name="localityView" BackgroundColor="#C0808080" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
+                    <StackLayout.Margin>
+                        <OnIdiom x:TypeArguments="Thickness" Phone="20,40" Tablet="100,150"/>
+                    </StackLayout.Margin>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Text="X" Clicked="CancelLocalityModal" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="40" HeightRequest="40" ></Button>
+                        <Label Grid.Row="0" Text="Оберіть населений пункт" TextColor="Black" FontSize="19" VerticalOptions="Center" HorizontalOptions="Start" Margin="20,0"/>
+                        <StackLayout Grid.Row="1" CompressedLayout.IsHeadless="true">
+                            <SearchBar x:Name="LocalitySearch" Text="{Binding LocalitySearchQuery}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Пошук">
+                                <SearchBar.Behaviors>
+                                    <behaviors:EventHandlerBehavior EventName="TextChanged">
+                                        <behaviors:InvokeCommandAction Command="{Binding RefreshLocalityList}" CommandParameter="pi" />
+                                    </behaviors:EventHandlerBehavior>
+                                </SearchBar.Behaviors>
+                            </SearchBar>
+                            <Label x:Name="LocalityLoadIndicator" IsVisible="{Binding Path=LocalityLoadIndicator}" Text="Загрузка..." TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </StackLayout>
+                        <CollectionView Grid.Row="2" x:Name="LocalityList" ItemsSource="{Binding Path=Localities}" SelectionMode="Single" SelectionChanged="LocalitySelected">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout HorizontalOptions="FillAndExpand"
+                                                         Orientation="Horizontal" Padding="10" CompressedLayout.IsHeadless="true">
+                                        <Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</extensions:CustomBackButtonEventHandlerContentPage>

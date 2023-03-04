@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:converters="clr-namespace:idp.App.Converters;assembly=idp.App"
+             xmlns:controls="clr-namespace:idp.App.View.Controls;assembly=idp.App"
+             x:Class="idp.App.View.BeneficiariesPage"
+             NavigationPage.HasBackButton="False"
+             Title="Бенефіціари">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Синхронізація довідників" Order="Secondary" Priority="0" Command="{Binding SyncDict}"/>
+        <ToolbarItem Text="Синхронізація бенефіціарів" Order="Secondary" Priority="0" Command="{Binding SyncBeneficiary}"/>
+        <ToolbarItem Text="Змінити користувача" Order="Secondary" Priority="0" Clicked="ChangeUser"/>
+        <ToolbarItem Text="Зберегти лог файл" Order="Secondary" Priority="0" Clicked="DownloadLogs"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Row="0" Grid.Column="1" Text="Створити нового бенефіціара" Style="{StaticResource blueButton}" Clicked="CreateNewBeneficiary" Margin="0,10,5,0"/>
+                    <dg:DataGrid x:Name="BeneficiariesDg" Grid.Row="1" ColumnSpan="2" ItemsSource="{Binding Beneficiaries, Mode=TwoWay}" SelectionEnabled="True" SelectedItem="{Binding SelectedItem}"
+                         PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"
+                         RowHeight="100" HeaderHeight="70" BorderColor="#CCCCCC" HeaderBackground="#E0E6F8" Padding="5">
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>13</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn  Title="Дата" PropertyName="PollDate" Width="90">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding Converter={StaticResource DateFormat}}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn  Title="Автор" PropertyName="CreatorName" Width="2*">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn  Title="П.І.П." PropertyName="Fio" Width="100">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn  Title="Стать" PropertyName="Sex" Width="55">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding Converter={StaticResource sexConverter}}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn  Title="Вік" PropertyName="DAgeCategory" Width="45">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding Converter={StaticResource ageConverter}}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn  Title="Номер телефону" PropertyName="ContactPhoneMain" Width="90"/>
+                            <dg:DataGridColumn Title="Детальний опис проблеми" PropertyName="ProblemDescription" Width="2*">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn Title="Рекомендовані форми допомоги" PropertyName="BeneficiaryHelpForms" Width="2*">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout VerticalOptions="Center" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding}" TextColor="Black"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn Title="Синхронізація" PropertyName="SyncError" Width="50">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Style="{StaticResource stackInCell}">
+                                            <Label Text="{Binding Converter={StaticResource errorConverter}}" TextColor="DarkRed" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#F2F2F2</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:DataGrid.Resources>
+                            <ResourceDictionary>
+                                <converters:BeneficiarySexConverter x:Key="sexConverter"/>
+                                <converters:BeneficiaryAgeConverter x:Key="ageConverter"/>
+                                <converters:BeneficiaryErrorConverter x:Key="errorConverter"/>
+                                <Style x:Key="stackInCell" TargetType="StackLayout">
+                                    <Setter Property="Padding" Value="5" />
+                                </Style>
+                            </ResourceDictionary>
+                        </dg:DataGrid.Resources>
+                    </dg:DataGrid>
+                </Grid>
+            </StackLayout>
+            <!--Modal contents-->
+            <controls:LoadingControl IsBusy="{Binding IsBusy}"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,1 @@
+﻿add-migration [migration name] -Project idp.Dal -StartupProject DbConfig
